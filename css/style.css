@@ -1,0 +1,29 @@
+body {
+    --main-color: #c0392b;
+}
+
+.navbar {
+    background-color: var(--main-color);
+}
+
+.food-banner{
+    background-image: url('../images/main.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.food-banner::before{
+    content: '';
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background-color: rgba(0,0,0,0.5);
+}
+
+
+#map {
+    width: 500px;
+    height: 500px;
+}
