@@ -8,10 +8,13 @@
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+		<link rel="stylesheet" href="css/sweet-alert.css">
 		<link rel="stylesheet" href="css/style.css">
 
 		<title>Food Bird</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-sanitize.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.7/angular-route.min.js"></script>
 
 	</head>
 	<body ng-controller="MainController">
@@ -35,13 +38,18 @@
 									<form>
 										<div class="form-group">
 											<label for="email">Email</label>
-											<input type="email" class="form-control" id="email" placeholder="Enter email">
+											<input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="form.email">
 										</div>
 										<div class="form-group">
 											<label for="password">Κωδικός</label>
-											<input type="password" class="form-control" id="password" placeholder="Password">
+											<input type="password" class="form-control" id="password" placeholder="Password" ng-model="form.password">
 										</div>
-										<button type="submit" class="btn btn-warning btn-block">
+										<button 
+											type="submit" 
+											class="btn btn-warning btn-block" 
+											ng-click="emailPasswordLogin()"
+											ng-disabled="!form.email || !form.password"
+										>
 											Είσοδος
 										</button>
 										<button type="submit" class="btn btn-danger btn-block" ng-click="googleLogin()">
@@ -76,11 +84,61 @@
 		<div id="map"></div>
 				
 
+		<!-- Modal -->
+		<div class="modal fade" id="signupModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Εγγραφή νέου χρήστη</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+
+							<div class="form-group">
+								<label for="signupName">Όνομα</label>
+								<input type="text" ng-model="form.name" class="form-control" id="signupName">
+							</div>
+							<div class="form-group">
+								<label for="signupGender">SEX</label>
+								<select id="signupGender" class="form-control" ng-model="form.gender">
+									<option Value="male">Άνδρας</option>
+									<option Value="female">Γυναίκα</option>
+									<option Value="other">Άλλο</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="signupEmail">Email</label>
+								<input type="email" ng-model="form.email" class="form-control" id="signupEmail">
+							</div>
+							<div class="form-group">
+								<label for="signupPassword">Κωδικός</label>
+								<input type="password" ng-model="form.password" class="form-control">
+							</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Ακύρωση</button>
+						<button 
+							type="button" 
+							class="btn btn-primary" 
+							ng-disabled="!form.name || !form.email || !form.password || !form.gender"
+							ng-click="createUser()"
+						>Εγγραφή</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
 		<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+		<script src="js/sweet-alert.min.js"></script>
+		<script src="js/SweetAlert.min.js"></script>
 		<script src="js/app.js"></script>
 
 		<script>
