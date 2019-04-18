@@ -4,6 +4,7 @@
 		<!-- Required meta tags -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<base href="/birdfood/"/>
 
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -19,72 +20,22 @@
 	</head>
 	<body ng-controller="MainController">
 		<div class="navbar navbar-dark">
-			<span class="navbar-brand">Food Bird</span>
-		</div>
-		
-		<div class="container-fluid food-banner">
-			<div class="row">
-				<div class="col">
-					<div class="container">
-						<div class="row">
-							<div class="col-lg-7">
-								<h1 class="display-4 mt-5 text-white">
-									Ομορφαίνει δε παχαίνει
-								</h1>
-							</div>
-							<div class="col-lg-5">
-								<div class="bg-white rounded m-5 p-3 shadow" ng-if="!user">
-									<h1 class="display-4 mb-4 text-center">Είσοδος</h1>
-									<form>
-										<div class="form-group">
-											<label for="email">Email</label>
-											<input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="form.email">
-										</div>
-										<div class="form-group">
-											<label for="password">Κωδικός</label>
-											<input type="password" class="form-control" id="password" placeholder="Password" ng-model="form.password">
-										</div>
-										<button 
-											type="submit" 
-											class="btn btn-warning btn-block" 
-											ng-click="emailPasswordLogin()"
-											ng-disabled="!form.email || !form.password"
-										>
-											Είσοδος
-										</button>
-										<button type="submit" class="btn btn-danger btn-block" ng-click="googleLogin()">
-											<i class="fab fa-google"></i>
-											Google Login
-										</button>
-										<button type="submit" class="btn btn-primary btn-block">
-											<i class="fab fa-facebook-f"></i>
-											Facebook Login
-										</button>
-									</form>
-								</div>
+			<a href="" class="navbar-brand">Food Bird</a>
 
-								<div class="bg-white rounded m-5 p-3 shadow" ng-if="user">
-									<img src="{{ user.photo }}" height="100"/>
-									{{ user.name }}
-									<button class="btn btn-danger btn-block" ng-click="logOut()">
-										Log out
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+			<div class="float-right">
 
-				
+				<span ng-if="user">
+					<button class="btn btn-sm btn-dark btn-block" ng-click="logOut()">
+						Log out
+					</button>
+				</span>
+			
 			</div>
 		</div>
+		
+		<ng-view></ng-view>
 
-
-		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
-		<div id="map"></div>
-				
-
-		<!-- Modal -->
+		<!-- Register Modal -->
 		<div class="modal fade" id="signupModal" tabindex="-1" role="dialog">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
@@ -131,6 +82,90 @@
 			</div>
 		</div>
 
+		<!-- Add new address Modal -->
+		<div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog">
+				<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Προσθήκη νέας διεύθυνσης</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+								<div class="row">
+									<div class="col-6">
+										<ng-map
+											pan-control="true"
+											map-type-control="true"
+											map-type-control-options="{style:'DROPDOWN_MENU'}"
+											zoom-control="false"
+										>
+											<marker position="[{{ coordinates.lat }}, {{ coordinates.lng }}]"></marker>
+										</ng-map>
+									</div>
+									<div class="col-6">
+										<div class="form-group">
+											<label for="street">Street</label>
+											<input type="text" ng-model="newAddress.street" class="form-control" id="street"/>
+										</div>
+										<div class="form-group">
+											<label for="number">Number</label>
+											<input type="text" ng-model="newAddress.number" class="form-control" id="number"/>
+										</div>
+										<div class="form-group">
+											<label for="postal_code">postal_code</label>
+											<input type="text" ng-model="newAddress.postal_code" class="form-control" id="postal_code"/>
+										</div>
+										<div class="form-group">
+											<label for="floor_type">Typos Katikias</label>
+											<select ng-model="newAddress.floor_type" class="form-control" id="floor_type">
+												<option value="" style="display:none">Epilekste Typo Katikias</option>
+												<option value="1">Monokatikia</option>
+												<option value="2">Polykatikia</option>
+											</select>
+										</div>
+										<div class="form-group" ng-if="newAddress.floor_type == 2">
+											<label for="floor_num">Orofos</label>
+											<input type="text" ng-model="newAddress.floor_num" class="form-control" id="floor_num"/>
+										</div>
+										<div class="form-group" ng-if="newAddress.floor_type == 2">
+											<label for="floor_name">Onoma sto koudouni</label>
+											<input type="text" ng-model="newAddress.floor_name" class="form-control" id="floor_name"/>
+										</div>
+										<div class="form-group">
+											<label for="country">country</label>
+											<input type="text" ng-model="newAddress.country" class="form-control" id="country"/>
+										</div>
+										<div class="form-group">
+											<label for="city">City</label>
+											<input type="text" ng-model="newAddress.city" class="form-control" id="city"/>
+										</div>
+										<div class="form-group">
+											<label for="alias">Favorite Name</label>
+											<input type="text" ng-model="newAddress.alias" class="form-control" id="alias"/>
+										</div>
+										<div class="form-group">
+											<label for="notes">Sxolia gia th dieuthinsh</label>
+											<textarea ng-model="newAddress.notes" class="form-control" id="notes"></textarea>
+										</div>
+
+									</div>
+								</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Ακύρωση</button>
+							<button 
+								type="button" 
+								class="btn btn-primary" 
+								ng-disabled="checkNewAddressForm()"
+								ng-click="saveNewAddress()"
+							>Προσθήκη</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
 
 		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -139,85 +174,8 @@
 		<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 		<script src="js/sweet-alert.min.js"></script>
 		<script src="js/SweetAlert.min.js"></script>
+		<script src="https://maps.google.com/maps/api/js?libraries=placeses,visualization,drawing,geometry,places&key=AIzaSyCwJeXqFUieJ-JyFQuZ5D5lBpNpLZ0xIAQ"></script>
+		<script src="https://rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.js"></script>
 		<script src="js/app.js"></script>
-
-		<script>
-				// This example adds a search box to a map, using the Google Place Autocomplete
-				// feature. People can enter geographical searches. The search box will return a
-				// pick list containing a mix of places and predicted search terms.
-		  
-				// This example requires the Places library. Include the libraries=places
-				// parameter when you first load the API. For example:
-				// <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-		  
-				function initAutocomplete() {
-				  var map = new google.maps.Map(document.getElementById('map'), {
-					center: {lat: -33.8688, lng: 151.2195},
-					zoom: 13,
-					mapTypeId: 'roadmap'
-				  });
-		  
-				  // Create the search box and link it to the UI element.
-				  var input = document.getElementById('pac-input');
-				  var searchBox = new google.maps.places.SearchBox(input);
-				  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-		  
-				  // Bias the SearchBox results towards current map's viewport.
-				  map.addListener('bounds_changed', function() {
-					searchBox.setBounds(map.getBounds());
-				  });
-		  
-				  var markers = [];
-				  // Listen for the event fired when the user selects a prediction and retrieve
-				  // more details for that place.
-				  searchBox.addListener('places_changed', function() {
-					var places = searchBox.getPlaces();
-		  
-					if (places.length == 0) {
-					  return;
-					}
-		  
-					// Clear out the old markers.
-					markers.forEach(function(marker) {
-					  marker.setMap(null);
-					});
-					markers = [];
-		  
-					// For each place, get the icon, name and location.
-					var bounds = new google.maps.LatLngBounds();
-					places.forEach(function(place) {
-					  if (!place.geometry) {
-						console.log("Returned place contains no geometry");
-						return;
-					  }
-					  var icon = {
-						url: place.icon,
-						size: new google.maps.Size(71, 71),
-						origin: new google.maps.Point(0, 0),
-						anchor: new google.maps.Point(17, 34),
-						scaledSize: new google.maps.Size(25, 25)
-					  };
-		  
-					  // Create a marker for each place.
-					  markers.push(new google.maps.Marker({
-						map: map,
-						icon: icon,
-						title: place.name,
-						position: place.geometry.location
-					  }));
-		  
-					  if (place.geometry.viewport) {
-						// Only geocodes have viewport.
-						bounds.union(place.geometry.viewport);
-					  } else {
-						bounds.extend(place.geometry.location);
-					  }
-					});
-					map.fitBounds(bounds);
-				  });
-				}
-		  
-			  </script>
-			  <script src="https://maps.googleapis.com/maps/api/js?key=API_KEY&libraries=places&callback=initAutocomplete" async defer></script>
 	</body>
 </html>

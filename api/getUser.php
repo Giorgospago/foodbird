@@ -8,6 +8,15 @@
     $user = mysqli_fetch_assoc($res);
 
     if ($user) {
+
+        // Get all adresses
+        $user["addresses"] = [];
+        $queryAddresses = "SELECT * FROM addresses WHERE user_id = '$id'";
+        $resAddresses = mysqli_query($con, $queryAddresses);
+        while ($a = mysqli_fetch_assoc($resAddresses)) {
+            $user["addresses"][] = $a;
+        }
+
         $response = [
             'success' => true,
             'user' => $user

@@ -1,0 +1,64 @@
+<div class="container-fluid food-banner">
+    <div class="row">
+        <div class="col">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <h1 class="display-4 mt-5 text-white">
+                            Ομορφαίνει δε παχαίνει
+                        </h1>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="bg-white rounded m-5 p-3 shadow" ng-if="!user">
+                            <h1 class="display-4 mb-4 text-center">Είσοδος</h1>
+                            <form>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="form.email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Κωδικός</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Password" ng-model="form.password">
+                                </div>
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-warning btn-block" 
+                                    ng-click="emailPasswordLogin()"
+                                    ng-disabled="!form.email || !form.password"
+                                >
+                                    Είσοδος
+                                </button>
+                                <button type="submit" class="btn btn-danger btn-block" ng-click="googleLogin()">
+                                    <i class="fab fa-google"></i>
+                                    Google Login
+                                </button>
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    <i class="fab fa-facebook-f"></i>
+                                    Facebook Login
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="bg-white rounded m-5 p-3 shadow" ng-if="user">
+                            <img src="{{ user.photo }}" height="100"/>
+                            <h3>Hi {{ user.name }} !</h3>
+                            <div ng-if="user.addresses.length > 0">
+                                <select class="form-control form-control-lg my-3" ng-model="selectedAddress">
+                                    <option ng-repeat="ad in user.addresses" ng-value="ad.id">{{ ad.alias }} ({{ ad.street }} {{ ad.number }}, {{ ad.postal_code }})</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-block btn-outline-warning" ng-click="addNewAddress()">
+                                Προσθήκη νέας διεύθυνσης
+                            </button>
+                            <a href="order/{{ selectedAddress }}" class="btn btn-block btn-success btn-lg">
+                                Παράγγειλε τώρα
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+</div>

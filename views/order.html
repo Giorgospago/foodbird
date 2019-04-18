@@ -1,0 +1,63 @@
+<div class="container" ng-init="getNearbyStores()">
+    <div class="row">
+        <div class="col">
+            
+        </div>
+    </div>
+
+    <div class="row" ng-if="currentAddress">
+        <div class="col">
+            <h4>
+                <span class="text-muted">Κοντινά καταστήματα σε:</span> <br>
+                {{ currentAddress.alias }}
+                (
+                    {{ currentAddress.street }} {{ currentAddress.number }}, 
+                    {{ currentAddress.postal_code }}
+                    {{ currentAddress.city }}
+                    {{ currentAddress.country }}
+                )
+                <footer class="blockquote-footer" ng-if="currentAddress.notes">
+                    {{ currentAddress.notes }}
+                </footer>
+
+            </h4>
+        </div>
+    </div>
+
+    <div class="row" ng-if="stores.length > 0">
+        <div class="col-3">
+            <div class="row">
+                <div class="col">
+                    <h2>Filters</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <ul>
+                        <li ng-repeat="filter in filters">{{ filter.name }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row">
+                <div class="col">
+                    <h2>Katasthmata</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <ul>
+                        <li ng-repeat="store in stores">{{ store.name }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="storeLoader">
+        <div class="col">
+            <img src="images/loader.gif" class="stores-loader"/>
+        </div>
+    </div>
+</div>
