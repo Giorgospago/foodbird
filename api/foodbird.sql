@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Φιλοξενητής: 127.0.0.1
--- Χρόνος δημιουργίας: 18 Απρ 2019 στις 20:49:33
+-- Χρόνος δημιουργίας: 09 Μάη 2019 στις 20:38:43
 -- Έκδοση διακομιστή: 10.1.36-MariaDB
 -- Έκδοση PHP: 7.2.10
 
@@ -53,6 +53,91 @@ INSERT INTO `addresses` (`id`, `user_id`, `street`, `number`, `postal_code`, `fl
 -- --------------------------------------------------------
 
 --
+-- Δομή πίνακα για τον πίνακα `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Άδειασμα δεδομένων του πίνακα `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`) VALUES
+(1, 'Τύπος φαγητού'),
+(2, 'Τύπος καταστήματος');
+
+-- --------------------------------------------------------
+
+--
+-- Δομή πίνακα για τον πίνακα `filters`
+--
+
+CREATE TABLE `filters` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Άδειασμα δεδομένων του πίνακα `filters`
+--
+
+INSERT INTO `filters` (`id`, `name`, `category_id`) VALUES
+(1, 'Σουβλάκια', 1),
+(2, 'Pizza', 1),
+(3, 'PAOK', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Δομή πίνακα για τον πίνακα `stores`
+--
+
+CREATE TABLE `stores` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `photo` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `address` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `latitude` decimal(21,20) DEFAULT NULL,
+  `longitude` decimal(21,20) DEFAULT NULL,
+  `email` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Άδειασμα δεδομένων του πίνακα `stores`
+--
+
+INSERT INTO `stores` (`id`, `name`, `photo`, `address`, `latitude`, `longitude`, `email`, `phone`) VALUES
+(1, 'Savourikos', 'https://pbs.twimg.com/profile_images/423859540489035776/CQLebMle_400x400.png', 'Aristotelous Square 8', '9.99999999999999999999', '9.99999999999999999999', 'savourikos@gmail.com', '1234567890'),
+(2, 'Savourikos Pizza', 'https://pbs.twimg.com/profile_images/423859540489035776/CQLebMle_400x400.png', 'Aristotelous Square 8', '9.99999999999999999999', '9.99999999999999999999', 'savourikos@gmail.com', '1234567890');
+
+-- --------------------------------------------------------
+
+--
+-- Δομή πίνακα για τον πίνακα `store_filter`
+--
+
+CREATE TABLE `store_filter` (
+  `store_id` int(11) NOT NULL,
+  `filter_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Άδειασμα δεδομένων του πίνακα `store_filter`
+--
+
+INSERT INTO `store_filter` (`store_id`, `filter_id`) VALUES
+(1, 1),
+(2, 2),
+(2, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Δομή πίνακα για τον πίνακα `users`
 --
 
@@ -85,6 +170,24 @@ ALTER TABLE `addresses`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Ευρετήρια για πίνακα `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Ευρετήρια για πίνακα `filters`
+--
+ALTER TABLE `filters`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Ευρετήρια για πίνακα `stores`
+--
+ALTER TABLE `stores`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Ευρετήρια για πίνακα `users`
 --
 ALTER TABLE `users`
@@ -99,6 +202,24 @@ ALTER TABLE `users`
 --
 ALTER TABLE `addresses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT για πίνακα `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT για πίνακα `filters`
+--
+ALTER TABLE `filters`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT για πίνακα `stores`
+--
+ALTER TABLE `stores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
