@@ -214,6 +214,7 @@ app.controller("MainController", function($scope, $http, $firebaseAuth, SweetAle
     };
 
 
+    $scope.selected_filters = {};
     $scope.filters = [];
     $scope.stores = [];
     $scope.currentAddress = {};
@@ -234,6 +235,30 @@ app.controller("MainController", function($scope, $http, $firebaseAuth, SweetAle
         .catch(function() {
             $scope.storeLoader = false;
         });
+    };
+
+    $scope.setFilter = function(id) {
+        if($scope.selected_filters[id]) {
+            delete $scope.selected_filters[id];
+        } else {
+            $scope.selected_filters[id] = true;
+        }
+    };
+
+    $scope.checkFilters = function(store) {
+        var selectedFilters = Object.keys($scope.selected_filters);
+        if(selectedFilters.length === 0) {
+            return true;
+        }
+        
+        for(filter of selectedFilters) {
+            filter = parseInt(filter);
+            if (store.filters.includes(filter)) {
+                return true;
+            }
+        }
+
+        return false;
     };
 
 

@@ -33,3 +33,25 @@ body {
     display: block;
     margin: 20px auto;
 }
+
+.filter-categories, .subfilters, .stores-list {
+    list-style: none;
+    padding:0;
+    margin:0;
+}
+.subfilters > li {
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 5px;
+    padding: 5px;
+}
+.subfilters > li.active {
+    background-color: crimson;
+    color: white;
+}
+
+.stores-list > li {
+    border:solid 1px lightgrey;
+    border-radius: 4px;
+    margin-bottom: 10px
+}

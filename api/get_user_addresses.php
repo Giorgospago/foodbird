@@ -11,7 +11,7 @@
     }
 
     header("Content-type: application/json");
-    echo json_encode([
+    echo json([
         'success' => true,
         'addresses' => $addresses
     ]);

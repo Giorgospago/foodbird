@@ -21,7 +21,7 @@
     mysqli_query($con, $query);
 
     header("Content-type: application/json");
-    echo json_encode([
+    echo json([
         'success' => true
     ]);
 ?>

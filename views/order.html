@@ -33,8 +33,19 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <ul>
-                        <li ng-repeat="filter in filters">{{ filter.name }}</li>
+                    <ul  class="filter-categories">
+                        <li ng-repeat="filter in filters">
+                            {{ filter.name }}
+                            <ul class="subfilters">
+                                <li 
+                                    ng-repeat="sub in filter.filters"
+                                    ng-click="setFilter(sub.id)"
+                                    ng-class="{'active': selected_filters[sub.id]}"
+                                >
+                                    {{ sub.name }}
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -47,8 +58,11 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <ul>
-                        <li ng-repeat="store in stores">{{ store.name }}</li>
+                    <ul class="stores-list">
+                        <li ng-repeat="store in stores | filter: checkFilters">
+                            <img ng-src="{{ store.photo }}" height="50"/>
+                            {{ store.name }}
+                        </li>
                     </ul>
                 </div>
             </div>
