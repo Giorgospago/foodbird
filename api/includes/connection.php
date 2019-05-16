@@ -1,8 +1,8 @@
 <?php
-    $host = "localhost";
-    $user = "root";
-    $pass = "";
-    $db = "foodbird";
+    $host = "5.189.177.98";
+    $user = "bird_user";
+    $pass = "3N~rl53s";
+    $db = "FoodBirdDB";
 
     $con = mysqli_connect($host, $user, $pass, $db);
     mysqli_query($con, "SET NAMES utf8");
