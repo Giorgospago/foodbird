@@ -61,7 +61,8 @@
                     <ul class="stores-list">
                         <li ng-repeat="store in stores | filter: checkFilters">
                             <img ng-src="{{ store.photo }}" height="50"/>
-                            {{ store.name }}
+                            {{ store.name }},
+                            {{ store.distance | number:1 }}km
                         </li>
                     </ul>
                 </div>

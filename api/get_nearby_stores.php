@@ -27,10 +27,23 @@
 
     $stores = [];
     $storesQuery = "
-        SELECT stores.*, GROUP_CONCAT(store_filter.filter_id) as filters
-        FROM stores
-        INNER JOIN store_filter ON stores.id = store_filter.store_id
-        GROUP BY stores.id
+        SELECT tbl.*,
+        GROUP_CONCAT(store_filter.filter_id) as filters
+        FROM (
+            SELECT
+                stores.*,
+                ( 6371 * acos( cos( radians(".$address['latitude'].") )
+                    * cos(  radians( stores.latitude )   )
+                    * cos(  radians( stores.longitude ) - radians(".$address['longitude'].") )
+                    + sin( radians(".$address['latitude'].") )
+                    * sin( radians( stores.latitude ) )
+                ))
+                AS distance
+            FROM stores
+            HAVING distance < 0.8
+        ) as tbl
+        INNER JOIN store_filter ON tbl.id = store_filter.store_id
+        GROUP BY tbl.id
     ";
     $resStores = mysqli_query($con, $storesQuery);
     while ($store = mysqli_fetch_assoc($resStores)) {
