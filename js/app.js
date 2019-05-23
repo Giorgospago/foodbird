@@ -20,6 +20,9 @@ app.config(function($routeProvider, $locationProvider) {
     .when("/order/:addressId", {
         templateUrl : "views/order.html"
     })
+    .when("/order/:addressId/store/:storeId", {
+        templateUrl : "views/store.html"
+    })
     .otherwise({
         templateUrl : "views/404.html"
     });
@@ -168,8 +171,6 @@ app.controller("MainController", function($scope, $http, $firebaseAuth, SweetAle
 
 
 
-
-
     $scope.addNewAddress = function() {
         $("#addAddressModal").modal('show');
 
@@ -259,6 +260,24 @@ app.controller("MainController", function($scope, $http, $firebaseAuth, SweetAle
         }
 
         return false;
+    };
+
+
+    $scope.menuLoader = false;
+    $scope.getStoreMenu = function() {
+        $scope.menuLoader = true;
+
+        $http.post("api/get_store_menu.php", {
+            addressId: $routeParams.addressId,
+            storeId: $routeParams.storeId
+        })
+        .then(function(response){
+            console.log(response.data);
+            $scope.menuLoader = false;
+        })
+        .catch(function() {
+            $scope.menuLoader = false;
+        });
     };
 
 

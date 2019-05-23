@@ -33,14 +33,14 @@
             SELECT
                 stores.*,
                 ( 6371 * acos( cos( radians(".$address['latitude'].") )
-                    * cos(  radians( stores.latitude )   )
-                    * cos(  radians( stores.longitude ) - radians(".$address['longitude'].") )
+                    * cos( radians( stores.latitude ) )
+                    * cos( radians( stores.longitude ) - radians(".$address['longitude'].") )
                     + sin( radians(".$address['latitude'].") )
                     * sin( radians( stores.latitude ) )
                 ))
                 AS distance
             FROM stores
-            HAVING distance < 0.8
+            HAVING distance < stores.max_distance
         ) as tbl
         INNER JOIN store_filter ON tbl.id = store_filter.store_id
         GROUP BY tbl.id

@@ -60,9 +60,11 @@
                 <div class="col">
                     <ul class="stores-list">
                         <li ng-repeat="store in stores | filter: checkFilters">
-                            <img ng-src="{{ store.photo }}" height="50"/>
-                            {{ store.name }},
-                            {{ store.distance | number:1 }}km
+                            <a href="order/{{ currentAddress.id }}/store/{{ store.id }}">
+                                <img ng-src="{{ store.photo }}" height="50"/>
+                                {{ store.name }},
+                                {{ store.distance | number:1 }}km
+                            </a>
                         </li>
                     </ul>
                 </div>

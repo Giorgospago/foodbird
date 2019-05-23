@@ -39,8 +39,8 @@
                             </form>
                         </div>
 
-                        <div class="bg-white rounded m-5 p-3 shadow" ng-if="user">
-                            <img src="{{ user.photo }}" height="100"/>
+                        <div class="bg-white rounded m-5 p-3 shadow user-photo-container" ng-if="user">
+                            <img src="{{ user.photo }}" class="user-photo"/>
                             <h3>Hi {{ user.name }} !</h3>
                             <div ng-if="user.addresses.length > 0">
                                 <select class="form-control form-control-lg my-3" ng-model="selectedAddress">

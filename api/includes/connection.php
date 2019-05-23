@@ -11,7 +11,8 @@
     $postdata = file_get_contents("php://input");
     $_POST = json_decode($postdata, true);
 
-
+    header("Content-type: application/json");
+    
     function json($data) {
         return json_encode($data, JSON_NUMERIC_CHECK);
     }
